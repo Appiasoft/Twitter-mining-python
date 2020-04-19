@@ -3,19 +3,17 @@ from pprint import pprint
 import objectpath
 from collections import Counter
 from bs4 import BeautifulSoup
-import pymysql
 import json
 from collections import OrderedDict
 
 
 
 # Definimos la ruta de los archivos JSON
-path_to_json = '../dataset/'
+path_to_json = 'dataset2'
 json_files = [pos_json for pos_json in os.listdir(path_to_json) if pos_json.endswith('.json')]
 
 
 #Declaramos nuestras variables principales de cada KPI
-
 
 
 #------------DB CIUDADES-------------
@@ -38,20 +36,6 @@ user_friend_dict = {}
 #KP5
 user_old_dict = {}
 
-
-def hinted_tuple_hook(obj):
-    if '__tuple__' in obj:
-        return tuple(obj['text'])
-    else:
-        return obj
-
-
-
-
-def replace_value_with_definition(key_to_find, definition, dictionary):
-    for key in dictionary.keys():
-        if key == key_to_find:
-            dictionary[key] = definition
 
 def KPIs():
     # Recorremos cada uno de los JSON leidos para realizar el procesamiento de la informacion
@@ -91,19 +75,13 @@ def KPIs():
 
             # KPI 4 : Top 5 de ciudades que en el Hashtach incluyen la plabra "Farc"
             hashtags = tuple(jsonnn_tree.execute('$..hashtags'))
-            print(type(hashtags))
-            list(hashtags)
-            listpr = {}
+            listprHashtags = {}
 
-            listpr = list(hashtags)
+            listprHashtags = list(hashtags)
 
-
-            print(listpr)
-
-
-            for i in range(1,len(hashtags)):
+            """ for i in range(1,len(hashtags)):
                 if(len(hashtags[i]) > 0):
-                    listpr =
+                    listpr = """
 
 
 
@@ -136,9 +114,8 @@ def KPIs():
 
 
             # KPI 3 : Top 10 de usuarios mayor  numero de Twitts
-            id = tuple(jsonnn_tree.execute('$..id'))
-
-            user_tw_dict[name] = id.__len__()
+            id_user = tuple(jsonnn_tree.execute('$..id'))
+            user_tw_dict[name] = id_user.__len__()
 
             # ------------------------------------------------------------------------
 
@@ -163,18 +140,30 @@ def KPIs():
 
 
 
-            # ------------------------------------------------------------------------
-            """
-            -------------------------------DB TIEMPO-------------------------------------
-            """
-
-            """
-            -------------------------------DB PALABRAS-------------------------------------
-            """
+    #DB - CIUDADDES
+    print('-------------KPI1')
+    with open('result/location.json', 'w') as json_file:
+            json.dump(location, json_file)
+    print('-------------KPI2')
+    with open('result/location_followers.json', 'w') as json_file:
+            json.dump(location_followers, json_file)
+    print('-------------KPI3')
+    with open('result/listprHashtags.json', 'w') as json_file:
+            json.dump(listprHashtags, json_file)
+            
+    #DB - PERSONAS
+    print('-------------KPI1')
+    with open('result/device.json', 'w') as json_file:
+            json.dump(device, json_file)
+    print('-------------KPI2')
+    with open('result/name_followers.json', 'w') as json_file:
+            json.dump(name_followers, json_file)
+    print('-------------KPI3')
+    with open('result/user_friend_dict.json', 'w') as json_file:
+            json.dump(user_friend_dict, json_file)
     print('-------------KPI4')
-    print(json.dumps(user_friend_dict, indent=4, sort_keys=True))
-    print('-------------KPI5')
-    print(json.dumps(user_old_dict, indent=4, sort_keys=True))
+    with open('result/user_old_dict.json', 'w') as json_file:
+            json.dump(user_old_dict, json_file)
 
 
     """
