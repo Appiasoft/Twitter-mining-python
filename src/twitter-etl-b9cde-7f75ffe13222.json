@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "twitter-etl-b9cde",
+  "private_key_id": "7f75ffe13222a6323a876b3a458efa9fda415724",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCqzdjFx/jKE1ZE\nmDMNl6y9jDu4nDqWs/ZESvFhnvyKj52wmXFpqv7mUBx0s4gByNLbtd5f3t3X/GGZ\nfJ2avsli5kTugqWiJXbaIothB1FquZQdQe1AkWhJJSwJFnLWeUyo3rxWuw4S42tC\nDVt8FoQecaWcCJYZr3Du/18xrNadtqAH8rcAMMbXMroouU8efDlsP8s2ilvz0GyZ\nmhpqlZZw+K3KSLllU0u7Ohn+hciPfR2NsKqMMxsq/PqO05tV6++DEkG3j62vqYYQ\nS7a25eWK4ioFCZZ2j8g60uvGv8FlgucauT9Pwp+e+h4b3nAZvP//uYBDq7EHhAnF\n3h3l96IPAgMBAAECggEANEOPiJlzfbXkCFJAEPEv2MIvxgH8BYAko2oBKVtiMC3Y\n1SBmrSw3Ghc6VdVXkSA3sSYZ2OETpdLitHoGqcKmUb5fKlJMx2xKTV4Towl/trX5\nZeh15fN4YyVeL5uwYQM121hobeuH12zCNbBrpXEoVT52K+QOteZSmrcGlGcsNo6a\nQ4YYvGFIKMrmMNzFlQGhbjmtKxs6/jM6nwrlkmpNpmQSHmN/uGsdDkgDeOllBJfh\nLHiAmeCMRTMKUy/zIyta0xmwJIve5qeIU9VC7rKg7LF1k8Am/vtd7yt9d2TnLmkU\nfmQiqTJcvTX6z+biI62zk5m9M2tkjY6QIo8zM8iTcQKBgQDjptX6l86a780C+Q3T\n2Taa3tZz+fC0ywuE3E1pquE8CR1HzO3t4V6PUPTcO7+Q/MxBbbKJhdtXMeLdWdBG\no2BsbLDncxxsoZ+cdN0dJnSKhVuwGxgw4RnyWVjuMyTUx3rAhPywtIc03IY6neZ5\ncfXdBe0gLxSmzXcIuLIB/Cz/sQKBgQDAEs1Kbz0Ph+UuzISY8pj7LUbhdjUYV5kM\n6P8xoP9yix6v5EZPj2Iw1Ajf64ZLALbzwAXtktRBl541W29JmjaehZVdLM0h/SM4\nl1iH28eZnweeVqkP9igwMTtuA2deUZlvCA86YSJo2AFKD5Eo2ZRZzsEWIdicskcx\n3dNr3A7tvwKBgB+jTBGrj1cRBJjpK/bJNUGIvp0Xm1BE97DbPRb2XJ8PVTZpUJfC\nvnWEdsM0uobX2zssl6dtJvKTSEgi90MZ6YioAl3oLYcbXydLRn+KnJ+zsO5klZQV\ndJmtuSJBkVjQ8EpZMRUNwcyi6TS0RReTsuuoqy/R2zjjTSu1H2gPN+HBAoGAR+UB\nyNHYhj60z46oN2PfVW1+MZiAiUsIs+dm1lnQJDzk0KvekZs3AtXrOH29d8eds6F1\n1pZ2MtMg2hIOlvtNZIrV/NlvM0DAdUdZUQk4Lk1zmZYQlDPsmRVkjGpjv89FYmUe\n5hhDvADWgrVO/X5r5C3a4oDqxsSIl6bTo3TsdZsCgYBiFa2XmFz6PGNHIHyoobbo\n3MgHyJHjkQYyLWF5DDne2HBdw5Pn7CQUwYrf8HOvf1Q7pBx7IipEOuHeSv6vhLDO\noxFA8qSFkoaxh9SgttwHW9eqdCBnxXteI1l6gUizSiPct67SZPuY6xJLuIymYN7p\nmutYpylg9RXTTCbFpOE47A==\n-----END PRIVATE KEY-----\n",
+  "client_email": "twitter-etl-b9cde@appspot.gserviceaccount.com",
+  "client_id": "110602659615900942080",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/twitter-etl-b9cde%40appspot.gserviceaccount.com"
+}
