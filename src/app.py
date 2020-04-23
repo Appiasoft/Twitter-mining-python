@@ -22,7 +22,8 @@ location = []
 #KP2
 location_followers = {}
 #KP3
-media_dict = {}
+allHashtags = []
+farcHashtags = []
 
 #------------DB PERSONAS------------
 #KP1
@@ -53,43 +54,37 @@ def KPIs():
             -----------------------------DB CIUDADES---------------------------------------
             """
 
-            #KPI 1 : Top 5 de ciudades en donde se Twittea con mayor frecuencia
+            #KPI 1 : Ubicaciones en donde se Twittea con mayor frecuencia
             locationtw = tuple(jsonnn_tree.execute('$..location'))
 
             for i in range(1, len(locationtw)):
                 if(locationtw[i] != ''):
                     location.append(locationtw[i])
             #------------------------------------------------------------------------
-
-            # KPI 2 : Top 5 de ciudades cuyos usuarios tienen mayor # de Seguidores
+    
+            # KPI 2 : Ciudades cuyos usuarios tienen mayor # de Seguidores
             followers_count = tuple(jsonnn_tree.execute('$..followers_count'))
             for i in range(1, len(locationtw)):
                 if(locationtw[i] != ''):
                     for j in range(1, len(followers_count)):
                         location_followers[locationtw[i]] = followers_count[j]
-            # ------------------------------------------------------------------------
-
-            # KPI 3 : Top 10 ciudades que mas contenido multimedia incluyen en los Twitss
 
             # ------------------------------------------------------------------------
-
-            # KPI 4 : Top 5 de ciudades que en el Hashtach incluyen la plabra "Farc"
-            hashtags = tuple(jsonnn_tree.execute('$..hashtags'))
-            listprHashtags = {}
-
-            listprHashtags = list(hashtags)
-
-            """ for i in range(1,len(hashtags)):
-                if(len(hashtags[i]) > 0):
-                    listpr = """
-
-
+    
+            # KPI 3 : Dos listas, una con todos los Hashtags utilizados y otra con los Hashtags que hacen referencia a FARC
+            hashtags = tuple(jsonnn_tree.execute('$..hashtags[text]'))
+            for i in range(1, len(hashtags)):
+                if(hashtags[i] != ''):
+                    if('farc' in hashtags[i] or 'Farc' in hashtags[i] or 'FARC' in hashtags[i]):
+                        farcHashtags.append(hashtags[i])
+                    else:
+                        allHashtags.append(hashtags[i])
 
             # ------------------------------------------------------------------------
-
-            """
-            -------------------------------DB PERSONAS-------------------------------------
-            """
+    """
+            
+            #-------------------------------DB PERSONAS-------------------------------------
+            
 
             # KPI 1 : Por tipo de dispositivo
             source = tuple(jsonnn_tree.execute('$..source'))
@@ -137,9 +132,21 @@ def KPIs():
                 if(name[i] != ''):
                     for j in range(1,len(created_ad)):
                         user_old_dict[name[i]] = created_ad[j]
+    """
 
 
+    #KP1 - RESULT
+    locationDict = dict(Counter(location))
+    
+    #KP2 - RESULT
+    locationFolloweDict = dict(Counter(location_followers))
+    
+    #KP4 . RESULT
+    allhashtagsDict = dict(Counter(allHashtags))
+    farchashtagsDict = dict(Counter(farcHashtags))
+    print(farchashtagsDict)
 
+    """
     #DB - CIUDADDES
     print('-------------KPI1')
     with open('result/location.json', 'w') as json_file:
@@ -165,7 +172,7 @@ def KPIs():
     with open('result/user_old_dict.json', 'w') as json_file:
             json.dump(user_old_dict, json_file)
 
-
+    """
     """
     
     d_sorted_by_value = OrderedDict(sorted(location_followers.items(), key=lambda x: x[1]))
