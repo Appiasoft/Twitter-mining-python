@@ -25,7 +25,7 @@ db = firestore.client()
 #-->https://firebase.google.com/docs/firestore/manage-data/transactions?hl=es_419
 def batched_set_firestore(collection, data):
     slicing=0
-    increment = 300
+    increment = 400
     while slicing< len(data):
         batch = db.batch()
         for i in data[slicing:slicing+increment]:
@@ -35,6 +35,10 @@ def batched_set_firestore(collection, data):
         slicing+=increment
         batch.commit()
 
+def add_firebase(collection, data):
+    # Add a new doc in collection
+    for d in data:
+       db.collection(collection).document().set(d)
 
 
 # Definimos la ruta de los archivos JSON
@@ -72,7 +76,7 @@ def KPIs():
         with open(os.path.join(path_to_json, js), encoding="utf8") as json_file:
             print(json_file.name)
             collection = (os.path.basename(json_file.name)).split(".")[0]
-            collections_name.append(collection)
+            collections_name.append({"person": collection})
 
             #Convertimos cada uno de los JSON en String
             json_text = json.load(json_file)
@@ -152,19 +156,12 @@ def KPIs():
                 tweets.append({"text":tweet,"created_at":created_at_tweet[i]})
             # ------------------------------------------------------------------------ 
         print(len(tweets))
-        a=[{'followers_count': 4672475, 'created_at': 'Wed Nov 16 11:02:56 +0000 2016'},
-            {'followers_count': 4672475, 'created_at': 'Wed Nov 16 11:02:25 +0000 2016'},
-            {'followers_count': 4672475, 'created_at': 'Wed Nov 16 11:01:19 +0000 2016'},
-            {'followers_count': 4672475, 'created_at': 'Wed Nov 16 10:56:52 +0000 2016'},
-            {'followers_count': 4672475, 'created_at': 'Wed Nov 16 10:55:47 +0000 2016'},
-            {'followers_count': 4672475, 'created_at': 'Wed Nov 16 10:53:43 +0000 2016'},
-            {'followers_count': 4672475, 'created_at': 'Wed Nov 16 10:48:08 +0000 2016'},
-            {'followers_count': 4672475, 'created_at': 'Wed Nov 16 03:29:29 +0000 2016'},
-            {'followers_count': 4672475, 'created_at': 'Wed Nov 16 02:50:20 +0000 2016'}]
+        #insert tweets in batch
         batched_set_firestore(collection, tweets)
         
-        print(collection)
-
+        print(collections_name)
+    #insert persons names into documents
+    add_firebase("persons", collections_name)
 
 if __name__ == '__main__':
     KPIs()
