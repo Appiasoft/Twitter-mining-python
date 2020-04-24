@@ -9,7 +9,7 @@ from collections import OrderedDict
 
 
 # Definimos la ruta de los archivos JSON
-path_to_json = 'dataset2'
+path_to_json = 'dataset'
 json_files = [pos_json for pos_json in os.listdir(path_to_json) if pos_json.endswith('.json')]
 
 
@@ -77,13 +77,9 @@ def KPIs():
                         farcHashtags.append(hashtags[i])
                     else:
                         allHashtags.append(hashtags[i])
-
-            # ------------------------------------------------------------------------
-    
-            
+                        
             #-------------------------------DB PERSONAS-------------------------------------
             
-
             # KPI 1 : Por tipo de dispositivo
             source = tuple(jsonnn_tree.execute('$..source'))
 
@@ -115,15 +111,6 @@ def KPIs():
     pprint('--------------------------------- KPI 2 - RESULT-----------------------------------------------------------')
 
     #Realizamos un contento de palabras y vamos guardando en un HashMap asi: (Dispositivo, numero de repeticion)
-    words_to_count_followers = (word for word in location_followers if word[:1].isupper())
-    c = Counter(words_to_count_followers)
-    # Guardamos nuestro HashMap en una lista iterable
-    list_followers = c.most_common(10)
-    print(list_followers)  
-    
-    pprint('--------------------------------- KPI 3 - RESULT-----------------------------------------------------------')
-
-    #Realizamos un contento de palabras y vamos guardando en un HashMap asi: (Dispositivo, numero de repeticion)
     words_to_count_all_hashtags = (word for word in allHashtags if word[:1].isupper())
     words_to_count_farc_hashtags = (word for word in farcHashtags if word[:1].isupper())
     c1 = Counter(words_to_count_all_hashtags)
@@ -134,7 +121,7 @@ def KPIs():
     print(list_all_hasgtags)
     print(list_farc_hasgtags)
     
-    pprint('---------------------------------KPI 4 - RESULT -----------------------------------------------------------')
+    pprint('---------------------------------KPI 3 - RESULT -----------------------------------------------------------')
 
     #Realizamos un contento de palabras y vamos guardando en un HashMap asi: (Dispositivo, numero de repeticion)
     words_to_count_Device = (word for word in device if word[:1].isupper())
@@ -143,18 +130,8 @@ def KPIs():
     list_device = c.most_common(10)
     print(list_device)
     
-    pprint('---------------------------------KPI 5 - RESULT -----------------------------------------------------------')
-
-    #Realizamos un contento de palabras y vamos guardando en un HashMap asi: (Dispositivo, numero de repeticion)
-    words_to_count_name_followers = (
-        word for word in name_followers if word[:1].isupper())
-    c = Counter(words_to_count_name_followers)
-    # Guardamos nuestro HashMap en una lista iterable
-    list_name_followers = c.most_common(10)
-    print(list_name_followers)
-    
   
-    """
+    
 
     #DB - CIUDADDES
     print('-------------KPI1')
@@ -180,7 +157,7 @@ def KPIs():
     print('-------------KPI4')
     with open('result/user_old_dict.json', 'w') as json_file:
             json.dump(user_old_dict, json_file)
-    """
+    
 
 
 if __name__ == '__main__':
