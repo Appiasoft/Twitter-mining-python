@@ -49,12 +49,10 @@ def KPIs():
             #Leemos nuestros objetos del Arreglo de datos
             jsonnn_tree = objectpath.Tree(json_text)
 
+            #-----------------------------DB CIUDADES---------------------------------------
+            
 
-            """
-            -----------------------------DB CIUDADES---------------------------------------
-            """
-
-            #KPI 1 : Ubicaciones en donde se Twittea con mayor frecuencia
+            #KPI 1 : Top de ubicaciones en donde se Twittea con mayor frecuencia
             locationtw = tuple(jsonnn_tree.execute('$..location'))
 
             for i in range(1, len(locationtw)):
@@ -62,7 +60,7 @@ def KPIs():
                     location.append(locationtw[i])
             #------------------------------------------------------------------------
     
-            # KPI 2 : Ciudades cuyos usuarios tienen mayor # de Seguidores
+            # KPI 2 : Top de ciudades cuyos usuarios tienen mayor # de Seguidores
             followers_count = tuple(jsonnn_tree.execute('$..followers_count'))
             for i in range(1, len(locationtw)):
                 if(locationtw[i] != ''):
@@ -81,7 +79,7 @@ def KPIs():
                         allHashtags.append(hashtags[i])
 
             # ------------------------------------------------------------------------
-    """
+    
             
             #-------------------------------DB PERSONAS-------------------------------------
             
@@ -95,58 +93,69 @@ def KPIs():
                     soup = BeautifulSoup(string)
                     device.append(soup.a.string)
             # ------------------------------------------------------------------------
-
-            # KPI 2 : Top 10 de usuarios con mas Seguidores
+    
+            # KPI 2 : Top de usuarios con mas Seguidores
             name = tuple(jsonnn_tree.execute('$..screen_name'))
 
             for i in range(1, len(name)):
                 if (name[i] != ''):
                     for j in range(1, len(followers_count)):
                         name_followers[name[i]] = followers_count[j]
-
-
             # ------------------------------------------------------------------------
+    
+    pprint('--------------------------------- KPI 1 - RESULT-----------------------------------------------------------')
 
+    #Realizamos un contento de palabras y vamos guardando en un HashMap asi: (Dispositivo, numero de repeticion)
+    words_to_count_location = (word for word in location if word[:1].isupper())
+    c = Counter(words_to_count_location)
+    # Guardamos nuestro HashMap en una lista iterable
+    list_location= c.most_common(10)
+    print(list_location)
+    
+    pprint('--------------------------------- KPI 2 - RESULT-----------------------------------------------------------')
 
-            # KPI 3 : Top 10 de usuarios mayor  numero de Twitts
-            id_user = tuple(jsonnn_tree.execute('$..id'))
-            user_tw_dict[name] = id_user.__len__()
+    #Realizamos un contento de palabras y vamos guardando en un HashMap asi: (Dispositivo, numero de repeticion)
+    words_to_count_followers = (word for word in location_followers if word[:1].isupper())
+    c = Counter(words_to_count_followers)
+    # Guardamos nuestro HashMap en una lista iterable
+    list_followers = c.most_common(10)
+    print(list_followers)  
+    
+    pprint('--------------------------------- KPI 3 - RESULT-----------------------------------------------------------')
 
-            # ------------------------------------------------------------------------
+    #Realizamos un contento de palabras y vamos guardando en un HashMap asi: (Dispositivo, numero de repeticion)
+    words_to_count_all_hashtags = (word for word in allHashtags if word[:1].isupper())
+    words_to_count_farc_hashtags = (word for word in farcHashtags if word[:1].isupper())
+    c1 = Counter(words_to_count_all_hashtags)
+    c2 = Counter(words_to_count_farc_hashtags)
+    # Guardamos nuestro HashMap en una lista iterable
+    list_all_hasgtags = c1.most_common(10)
+    list_farc_hasgtags = c2.most_common(10)
+    print(list_all_hasgtags)
+    print(list_farc_hasgtags)
+    
+    pprint('---------------------------------KPI 4 - RESULT -----------------------------------------------------------')
 
-            # KPI 4 : Top 10 de usuarios con mas amigos
-            friend_Count = tuple(jsonnn_tree.execute('$..friends_count'))
+    #Realizamos un contento de palabras y vamos guardando en un HashMap asi: (Dispositivo, numero de repeticion)
+    words_to_count_Device = (word for word in device if word[:1].isupper())
+    c = Counter(words_to_count_Device)
+    # Guardamos nuestro HashMap en una lista iterable
+    list_device = c.most_common(10)
+    print(list_device)
+    
+    pprint('---------------------------------KPI 5 - RESULT -----------------------------------------------------------')
 
-            for i in range(1,len(name)):
-                if(name[i] != ''):
-                    for j in range(1,len(friend_Count)):
-                        user_friend_dict[name[i]] = friend_Count[j]
-
-            # ------------------------------------------------------------------------
-
-            # KPI 5 : Top 10 usuarios mas antiguos
-
-            created_ad = tuple(jsonnn_tree.execute('$..created_at'))
-
-            for i in range(1,len(name)):
-                if(name[i] != ''):
-                    for j in range(1,len(created_ad)):
-                        user_old_dict[name[i]] = created_ad[j]
+    #Realizamos un contento de palabras y vamos guardando en un HashMap asi: (Dispositivo, numero de repeticion)
+    words_to_count_name_followers = (
+        word for word in name_followers if word[:1].isupper())
+    c = Counter(words_to_count_name_followers)
+    # Guardamos nuestro HashMap en una lista iterable
+    list_name_followers = c.most_common(10)
+    print(list_name_followers)
+    
+  
     """
 
-
-    #KP1 - RESULT
-    locationDict = dict(Counter(location))
-    
-    #KP2 - RESULT
-    locationFolloweDict = dict(Counter(location_followers))
-    
-    #KP4 . RESULT
-    allhashtagsDict = dict(Counter(allHashtags))
-    farchashtagsDict = dict(Counter(farcHashtags))
-    print(farchashtagsDict)
-
-    """
     #DB - CIUDADDES
     print('-------------KPI1')
     with open('result/location.json', 'w') as json_file:
@@ -171,74 +180,7 @@ def KPIs():
     print('-------------KPI4')
     with open('result/user_old_dict.json', 'w') as json_file:
             json.dump(user_old_dict, json_file)
-
     """
-    """
-    
-    d_sorted_by_value = OrderedDict(sorted(location_followers.items(), key=lambda x: x[1]))
-
-    json2 = json.dumps(d_sorted_by_value)
-
-    new_list = []
-    new_list.append(list(d_sorted_by_value.keys())[-1]+","+list(d_sorted_by_value.values())[-1])
-    new_list.append(list(d_sorted_by_value.keys())[-2]+","+list(d_sorted_by_value.values())[-2])
-    new_list.append(list(d_sorted_by_value.keys())[-3]+","+list(d_sorted_by_value.values())[-3])
-    new_list.append(list(d_sorted_by_value.keys())[-4]+","+list(d_sorted_by_value.values())[-4])
-    new_list.append(list(d_sorted_by_value.keys())[-5]+","+list(d_sorted_by_value.values())[-5])
-
-    print(new_list)
-    f = open("dict.json", "w")
-    f.write(json2)
-    f.close()
-    pprint('---------------------------------LOCATION (KPI_1)-----------------------------------------------------------')
-
-    #Realizamos un contento de palabras y vamos guardando en un HashMap asi: (Localizacion, numero de repeticion)
-    words_to_count = (word for word in location if word[:1].isupper())
-    c = Counter(words_to_count)
-    print(c.most_common(20))
-    #Guardamos nuestro HashMap en una lista iterable
-    list_kpi1 = c.most_common(5)
-
-    
-    #Realiazmos apertura de conexion y envio de informacion a MySQL
-    try:
-        with connection.cursor() as cursor:
-            for i in range(0,5):
-                QUERY_SQL_LOCATION = "INSERT INTO kp1(`location`, `number`) VALUES (%s, %s)"
-                cursor.execute(QUERY_SQL_LOCATION,(list_kpi1[i][0],list_kpi1[i][1]))
-                connection.commit()
-    finally:
-        print('Subio todo');
-    
-
-
-
-
-    pprint('---------------------------------DEVICE (KPI_2)-----------------------------------------------------------')
-
-    #Realizamos un contento de palabras y vamos guardando en un HashMap asi: (Dispositivo, numero de repeticion)
-    words_to_count_Device = (word for word in device if word[:1].isupper())
-    c = Counter(words_to_count_Device)
-    print(c.most_common(10))
-    # Guardamos nuestro HashMap en una lista iterable
-    list_device = c.most_common(10)
-    
-    
-    # Realiazmos apertura de conexion y envio de informacion a MySQL
-    try:
-        with connection.cursor() as cursor2:
-            for j in range(0, 10):
-                QUERY_SQL_DEVICE = "INSERT INTO kp2(`device`, `number`) VALUES (%s, %s)"
-                cursor2.execute(QUERY_SQL_DEVICE, (list_device[j][0],list_device[j][1]))
-                connection.commit()
-    finally:
-        # Finalmente cerramos la conexion
-        connection.close()
-        print('Subio todo')
-    
-    """
-
-
 
 
 if __name__ == '__main__':
